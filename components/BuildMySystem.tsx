@@ -1,148 +1,109 @@
-"use client";
-import { useMemo, useState } from "react";
-
+// components/BuildMySystem.tsx
 export default function BuildMySystem() {
-  // Core inputs
-  const [systemSizeKw, setSystemSizeKw] = useState(0);
-  const [ppw, setPpw] = useState(4.2);
-
-  // Adders
-  const [roof, setRoof] = useState(0);
-  const [battery, setBattery] = useState(0);
-  const [ev, setEv] = useState(0);
-
-  // Tech override gate
-  const [pwInput, setPwInput] = useState("");
-  const techUnlocked = pwInput === "67";
-
-  const baseCost = useMemo(
-    () => +(systemSizeKw * ppw * 1000).toFixed(2),
-    [systemSizeKw, ppw]
-  );
-  const total = baseCost + roof + battery + ev;
-
   return (
-    <div className="mx-auto max-w-5xl p-6 grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8">
-      {/* LEFT: temporary inputs (we'll replace with phases later) */}
-      <div className="space-y-6">
-        <h1 className="text-xl font-semibold">Build My System</h1>
+    <div style={{ padding: 24 }}>
+      <h1 style={{ margin: 0, fontSize: 24 }}>Build My System</h1>
+      <p style={{ opacity: 0.7, marginTop: 4 }}>Scaffold online. UI coming next.</p>
 
-        <section className="rounded-xl border border-white/10 p-4">
-          <h2 className="text-sm uppercase tracking-widest text-white/70 mb-4">
-            System Inputs (temporary)
-          </h2>
+      <div
+        style={{
+          display: "flex",
+          gap: 24,
+          alignItems: "flex-start",
+          marginTop: 24,
+        }}
+      >
+        {/* LEFT COLUMN */}
+        <div style={{ flex: 1, display: "grid", gap: 16 }}>
+          <section style={card}>
+            <h2 style={h2}>Phase 1 — Utility</h2>
+            <div>Utility Provider • Tier • City/Jurisdiction</div>
+          </section>
 
-          <label className="block text-sm mb-2">System Size (kW)</label>
-          <input
-            type="number"
-            value={systemSizeKw}
-            onChange={(e) => setSystemSizeKw(Number(e.target.value))}
-            className="w-full rounded-md bg-white/5 p-2 outline-none"
-            min={0}
-            step="0.1"
-          />
+          <section style={card}>
+            <h2 style={h2}>Phase 2 — Your Usage</h2>
+            <div>Avg Monthly Cost • Avg Monthly kWh • Annual kWh</div>
+          </section>
 
-          <details className="mt-4">
-            <summary className="cursor-pointer text-sm text-white/70">
-              Advanced Manual Overrides
-            </summary>
+          <section style={card}>
+            <h2 style={h2}>Phase 3 — System Inputs</h2>
+            <div>Offset Slider • Net Metering • Size/Production/Bill</div>
+          </section>
 
-            <div className="mt-3 space-y-3">
-              <div className="flex items-center gap-2">
-                <input
-                  type="password"
-                  value={pwInput}
-                  onChange={(e) => setPwInput(e.target.value)}
-                  placeholder="Tech password"
-                  className="rounded-md bg-white/5 p-2 outline-none"
-                />
-                <span
-                  className={`text-xs ${
-                    techUnlocked ? "text-green-400" : "text-white/40"
-                  }`}
-                >
-                  {techUnlocked ? "Unlocked" : "Enter 67"}
-                </span>
-              </div>
+          <section style={card}>
+            <h2 style={h2}>Phase 4 — Options & Upgrades</h2>
+            <div>Roof • Battery • Panel Upgrade</div>
+          </section>
 
-              <fieldset disabled={!techUnlocked} className={!techUnlocked ? "opacity-50" : ""}>
-                <label className="block text-sm mb-1">Price per Watt ($)</label>
-                <input
-                  type="number"
-                  value={ppw}
-                  onChange={(e) => setPpw(Number(e.target.value))}
-                  className="w-full rounded-md bg-white/5 p-2 outline-none"
-                  step="0.01"
-                />
-
-                <label className="block text-sm mt-3">Roof Replacement ($)</label>
-                <input
-                  type="number"
-                  value={roof}
-                  onChange={(e) => setRoof(Number(e.target.value))}
-                  className="w-full rounded-md bg-white/5 p-2 outline-none"
-                  step="1"
-                  min={0}
-                />
-
-                <label className="block text-sm mt-3">Battery ($)</label>
-                <input
-                  type="number"
-                  value={battery}
-                  onChange={(e) => setBattery(Number(e.target.value))}
-                  className="w-full rounded-md bg-white/5 p-2 outline-none"
-                  step="1"
-                  min={0}
-                />
-
-                <label className="block text-sm mt-3">EV Charger ($)</label>
-                <input
-                  type="number"
-                  value={ev}
-                  onChange={(e) => setEv(Number(e.target.value))}
-                  className="w-full rounded-md bg-white/5 p-2 outline-none"
-                  step="1"
-                  min={0}
-                />
-              </fieldset>
-            </div>
-          </details>
-        </section>
-      </div>
-
-      {/* RIGHT: sticky summary */}
-      <aside className="h-fit rounded-xl border border-white/10 p-4 sticky top-6">
-        <h3 className="text-sm uppercase tracking-widest text-white/70 mb-4">
-          $ Cost Rollup
-        </h3>
-        <Row label="System Size" value={`${systemSizeKw.toFixed(2)} kW`} />
-        <Row label="Price per Watt" value={`$ ${ppw.toFixed(2)}`} />
-        <Row label="System Base Cost" value={fmt(baseCost)} />
-        <Row label="Roof Replacement" value={fmt(roof)} />
-        <Row label="Battery Storage" value={fmt(battery)} />
-        <Row label="EV Charger" value={fmt(ev)} />
-
-        <div className="mt-4 border-t border-white/10 pt-4 flex items-baseline justify-between">
-          <div className="text-sm uppercase tracking-widest text-white/70">Total</div>
-          <div className="text-2xl font-semibold">{fmt(total)}</div>
+          <section style={card}>
+            <h2 style={h2}>Phase 5 — Final Build Summary</h2>
+            <div>System Size • Panels • Inverters • Offset • Upgrades</div>
+          </section>
         </div>
-      </aside>
+
+        {/* RIGHT COLUMN (sticky on desktop) */}
+        <aside
+          style={{
+            width: 380,
+            position: "sticky",
+            top: 24,
+            height: "fit-content",
+          }}
+        >
+          <div style={card}>
+            <h3 style={{ marginTop: 0, marginBottom: 12, fontSize: 16 }}>
+              $ Cost Rollup
+            </h3>
+            <dl style={dl}>
+              <div style={row}>
+                <dt>System Size</dt>
+                <dd>0.00 kW</dd>
+              </div>
+              <div style={row}>
+                <dt>Price per Watt</dt>
+                <dd>4.20</dd>
+              </div>
+              <div style={row}>
+                <dt>System Base Cost</dt>
+                <dd>$0.00</dd>
+              </div>
+              <div style={row}>
+                <dt>Roof Replacement</dt>
+                <dd>—</dd>
+              </div>
+              <div style={row}>
+                <dt>Battery Storage</dt>
+                <dd>—</dd>
+              </div>
+              <div style={row}>
+                <dt>EV Charger</dt>
+                <dd>—</dd>
+              </div>
+            </dl>
+            <div style={{ borderTop: "1px solid #333", marginTop: 12, paddingTop: 12, display: "flex", justifyContent: "space-between" }}>
+              <strong>Total</strong>
+              <strong>$0.00</strong>
+            </div>
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }
 
-function Row({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="py-2 flex items-center justify-between border-b border-white/5 last:border-b-0">
-      <span className="text-sm text-white/70">{label}</span>
-      <span className="text-white">{value}</span>
-    </div>
-  );
-}
+const card: React.CSSProperties = {
+  padding: 16,
+  border: "1px solid #2a2a2a",
+  borderRadius: 12,
+  background: "rgba(255,255,255,0.04)",
+};
 
-function fmt(n: number) {
-  return n.toLocaleString(undefined, { style: "currency", currency: "USD" });
-}
+const h2: React.CSSProperties = { margin: 0, marginBottom: 8, fontSize: 14, letterSpacing: 1 };
 
-  );
-}
+const dl: React.CSSProperties = { margin: 0, display: "grid", gap: 8 };
+
+const row: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: 16,
+};
